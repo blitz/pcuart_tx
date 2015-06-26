@@ -10,11 +10,12 @@
 
 enum {
   SAMPLE_RATE = 44100,
-  SYMBOL_RATE = 20,
+  SYMBOL_RATE = 100,
 
-  FREQ_START  = 2500,
-  FREQ_LOW    = 1500,
-  FREQ_HIGH   = 2000,
+  FREQ_START0  = 1000,
+  FREQ_START1  = 2000,
+  FREQ_LOW     = 1000,
+  FREQ_HIGH    = 1500,
 };
 
 static std::queue<float> output_fifo;
@@ -63,7 +64,8 @@ static void encode(uint8_t v)
 {
   std::lock_guard<std::mutex> _(output_fifo_mtx);
 
-  output_fifo.push(1.0 / FREQ_START);
+  output_fifo.push(1.0 / FREQ_START0);
+  output_fifo.push(1.0 / FREQ_START1);
 
   for (unsigned i = 0; i < 8; i++) {
     output_fifo.push(1.0 / ((v & (1 << i)) ? FREQ_HIGH : FREQ_LOW));
@@ -111,6 +113,7 @@ int main()
         break;
       }
     }
+
     std::this_thread::sleep_for(std::chrono::seconds(1));
   }
 
