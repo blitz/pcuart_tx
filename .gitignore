@@ -1,0 +1,5 @@
+*.o
+*~
+.scons*
+/pcuart_tx
+
