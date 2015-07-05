@@ -79,7 +79,7 @@ int main()
   spec.freq     = SAMPLE_RATE;
   spec.format   = AUDIO_U16SYS;
   spec.channels = 1;
-  spec.samples  = SAMPLE_RATE / (2*SYMBOL_RATE);
+  spec.samples  = 4096;
   spec.userdata = nullptr;
   spec.callback = audio_cb;
 
